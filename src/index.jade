@@ -13,8 +13,9 @@ html
 
     article
 
-      section(data-bespoke-state='intro dimmed')
-        h1 Water
+      section(data-bespoke-state='intro')
+        img(src='../img/logo.png')
+        h1 Emergency Water
 
       section
         h2 In an Earthquake
@@ -30,13 +31,19 @@ html
           li Faucet attachment, dispense pump
           li BPA-Free
 
-      section(data-bespoke-state='emphatic')
-        h2 Emphatic Slide!
-        h3 
+      section(data-bespoke-state='how')
+        h2 How do we get the water?
+        a(href='http://www.wikihow.com/Get-Emergency-Drinking-Water-from-a-Water-Heater') WikiHow Guide &#10159;
+        p or this video:
+        div <iframe width="420" height="315" src="//www.youtube.com/embed/mQbwTnW1SL0" frameborder="0" allowfullscreen></iframe>
 
       section(data-bespoke-state='secureheater')
         h2 Secure Your Water Heater!
         a(href='http://www.seattle.gov/emergency/library/snap/skills/Earthquake%20Safety%20securing%20water%20heater.pdf') Seattle Earthquake Safety Guide &#10159;
+
+      section(data-bespoke-state='end')
+        h2 Sample Food/Water
+        Unit 12 has a <a href="http://wiki.duwamish.net/index.php?title=Emergency_Stock_Guide_-_Unit_12">Sample Stock Guide</a> on the Wiki
 
     // build:js scripts/scripts.js
     script(src='bower_components/bespoke.js/dist/bespoke.min.js')
