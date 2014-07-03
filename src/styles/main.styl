@@ -4,13 +4,12 @@
 
 slide_width = 640px
 slide_height = 480px
-slide_background = #eaeaea
+slide_background = rgba(255,255,255,0.7)
 
 slide_transition_length = .6s
 slide_transition_easing = ease
+slide_transition_translate_x = 0
 slide_transition_rotate_y = 90deg
-// Safari bugs out on 3d transform-origins, so we have to fake it
-slide_transition_nudge_x = -100px
 
 bullet_transition_length = .3s
 bullet_transition_easing = ease
@@ -23,19 +22,18 @@ bullet_transition_translate_x = 16px
   margin: 0
   padding: 0
 
-@media print
-  *
-    -webkit-print-color-adjust: exact
-
-@page
-  size: landscape
-  margin: 0
-
 // bespoke.js layout styles
 
+.background
+  background-size: cover
+  background-position: center
+  background-repeat: no-repeat
+  box-shadow: inset 0 0 300px rgba(0,0,0,0.5)
+  z-index: -1
+
 article
-  transition: background slide_transition_length slide_transition_easing
   display: none
+
   &.bespoke-parent
     display: block
     position: absolute
@@ -44,17 +42,11 @@ article
     left: 0
     right: 0
     overflow: hidden
-    @media print
-      overflow: visible
-      position: static
     perspective: 600px
 
 .bespoke-slide
-  transition:
-    transform slide_transition_length slide_transition_easing,
-    opacity slide_transition_length slide_transition_easing,
-    background slide_transition_length slide_transition_easing
-  transform-origin: 50% 50% 0
+  transition: all slide_transition_length slide_transition_easing
+  transform-origin: 50% 50% ((slide_width / 2) * -1)
   backface-visibility: hidden
   display: flex
   flex-direction: column
@@ -69,32 +61,35 @@ article
   left: 50%
   margin-left: (slide_width / 2) * -1
   background: slide_background
-  padding: 40px
+  padding: 30px
   border-radius: 0
-  @media print
-    zoom: 1 !important // disable bespoke-scale
-    height: 743px // seems to correspond with an A4, landscape page height
-    width: 100%
-    page-break-before: always
-    position: static
-    margin: 0
-    transition: none
+
+  > *:first-child
+    margin-top: 0
+
+  > *:last-child
+    margin-bottom: 0
+
+  &.dark
+    background: rgba(0,0,0,0.7)
+    color: white
+
+  &.generator
+    background-image: url('../img/bespoke-generator.png')
+    background-color: #292929
+    background-position: center
+    background-repeat: no-repeat
+    background-size: 90%
 
 .bespoke-before
-  transform: translateX(slide_transition_nudge_x * -1) translateX(slide_width / -2) rotateY(slide_transition_rotate_y * -1) translateX(slide_width / -2)
-  @media print
-    transform: none
+  transform: translateX(slide_transition_translate_x * -1) rotateY(slide_transition_rotate_y * -1)
 
 .bespoke-after
-  transform: translateX(slide_transition_nudge_x) translateX(slide_width / 2) rotateY(slide_transition_rotate_y) translateX(slide_width / 2)
-  @media print
-    transform: none
+  transform: translateX(slide_transition_translate_x) rotateY(slide_transition_rotate_y)
 
 .bespoke-inactive
   opacity: 0
   pointer-events: none
-  @media print
-    opacity 1
 
 .bespoke-active
   opacity: 1
@@ -103,52 +98,14 @@ article
 
 .bespoke-bullet
   transition: all bullet_transition_length bullet_transition_easing
-  @media print
-    transition: none
 
 .bespoke-bullet-inactive
   opacity: 0
   li&
     transform: translateX(bullet_transition_translate_x)
-    @media print
-      transform: none
-  @media print
-    opacity: 1
 
 .bespoke-bullet-active
   opacity: 1
-
-// bespoke-scale styles
-
-.bespoke-scale-parent
-  perspective: 600px
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  @media print
-    transform: none !important
-
-// bespoke-progress styles
-
-.bespoke-progress-parent
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  height: 2px
-  @media only screen and (min-width: 1366px)
-    height: 4px
-  @media print
-    display: none
-
-.bespoke-progress-bar
-  transition: width .6s ease
-  position: absolute
-  height: 100%
-  background: #0089f3
-  border-radius: 0 4px 4px 0
 
 // bespoke-state styles
 
@@ -156,12 +113,37 @@ article
 .emphatic .bespoke-slide
   background: slide_background
 
+// prism styles
+
+code
+  font-size: 20px
+  padding: 16px 36px !important
+  max-width: 100%
+  margin: 10px 0;
+  max-width: 100%
+
+  &.min
+    background: none !important
+    padding: 10px !important
+    font-size: 10px
+
+  &.wrap
+    white-space: pre-wrap
+
 // content styles
 
+.background
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
+
 body
+  background: #a0a0a0
   font-family: helvetica, arial, sans-serif
-  font-size: 18px
-  color: #404040
+  font-size: 26px
+  color: #202020
 
 h1
   font-size: 72px
@@ -172,13 +154,15 @@ h1
 h2
   font-size: 42px
   letter-spacing: -1px
-  margin-bottom: 8px
+  margin-bottom: 26px
 
 h3
   font-size: 24px
   font-weight: normal
-  margin-bottom: 24px
-  color: #606060
+  margin: 20px 0 21px
+
+h2 + h3
+  margin-top: -10px
 
 hr
   visibility: hidden
@@ -193,7 +177,65 @@ li
 p
   margin: 0 100px 12px
   line-height: 22px
+  margin-bottom: 26px
 
 a
-  color: #0089f3
+  color: #0093CC
   text-decoration: none
+
+b 
+    display: inline-block
+    -webkit-transition: 0.5s
+    -moz-transition:    0.5s
+    -ms-transition:     0.5s
+    -o-transition:      0.5s
+    transition:         0.5s
+
+.me
+  size = 160px
+  background-image: url('../img/me.jpg')
+  background-size: 100%
+  width: size
+  height: size
+  border-radius: size+40
+  margin: 10px 0
+  opacity: 0.95
+
+.dimmed .background
+  -webkit-filter: brightness(50%)
+
+.blue .background
+  background-color: #60B3D3
+  box-shadow: inset 0 0 300px rgba(0,0,0,0.3)
+
+.intro .background
+[data-bespoke-state^='intro'] a
+  color: #CC5200
+
+.intro .rotating
+    -webkit-transform: rotate(-10deg)
+    -moz-transform:    rotate(-10deg)
+    -ms-transform:     rotate(-10deg)
+    -o-transform:      rotate(-10deg)
+    transform:         rotate(-10deg)
+
+    -webkit-transition-delay: 0.25s
+    -moz-transition-delay:    0.25s
+    -ms-transition-delay:     0.25s
+    -o-transition-delay:      0.25s
+    transition-delay:         0.25s
+
+.how .background
+  background-image: url('../img/confused_lionking.gif')
+
+.no section{
+  opacity:0;
+}
+.no .background
+  background-image: url('../img/no.gif')
+
+.waterbob .background
+  background-image: url('../img/waterbob_2.jpg')
+
+.secureheater .background
+  background-image: url('../img/waterheater_secure.jpg')
