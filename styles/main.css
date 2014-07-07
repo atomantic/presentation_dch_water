@@ -283,13 +283,17 @@ p {
   line-height: 30px;
 }
 .no section,
-.waterlines section {
+.waterlines section,
+.tracker section {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
 }
 .no .background {
   background-image: url("../img/no.gif");
+}
+.tracker .background {
+  background-image: url("../img/earthquaketracker.png");
 }
 .waterlines .background {
   background-image: url("../img/waterlines_dch.jpg");
