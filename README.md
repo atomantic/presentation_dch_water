@@ -1,5 +1,10 @@
-# Water
+# Duwamish Cohousing Emergency Water
+
 > A [Bespoke.js](http://markdalgleish.com/projects/bespoke.js) presentation, built with [generator-bespoke](https://github.com/markdalgleish/generator-bespoke)
+
+
+## View slides on Github Pages
+[View Slides](http://atomantic.github.io/presentation_dch_water)
 
 ## View slides locally
 
